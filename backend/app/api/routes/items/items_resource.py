@@ -68,6 +68,11 @@ async def create_new_item(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=strings.ITEM_ALREADY_EXISTS,
         )
+    if not await item_create.image:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=strings.ITEM_IMAGE_MISSING,
+        )
     item = await items_repo.create_item(
         slug=slug,
         title=item_create.title,
